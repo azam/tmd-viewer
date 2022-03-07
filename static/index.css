@@ -1,0 +1,227 @@
+/* https://fonts.googleapis.com/css?family=Noto+Sans+Bamum */
+/* bamum */
+@font-face {
+    font-family: 'Noto Sans Bamum';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/static/Noto_Sans_Bamum.woff2) format('woff2');
+    unicode-range: U+A6A0-A6FF, U+16800-16A38, U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* https://fonts.googleapis.com/css?family=Material+Icons+Outlined */
+/* fallback */
+@font-face {
+    font-family: 'Material Icons Outlined';
+    font-style: normal;
+    font-weight: 400;
+    src: url(/static/Material_Icons_Outlined.woff2) format('woff2');
+}
+
+.material-icons-outlined {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+html {
+    color-scheme: light;
+}
+
+body {
+    /* Copied from Twitter Desktop */
+    font-family: "Segoe UI", Meiryo, "Noto Sans Bamum", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+:root {
+
+    --light-text: #000;
+    --light-text-2: #363636;
+    --light-bg: #fff;
+    --light-link: hsl(221, 53.1%, 53.1%); /* #485fc7 */
+    --light-primary: var(--light-link);
+    --light-primary-border: var(--light-link);
+
+    --dark-text: #fff;
+    --dark-text-2: #bbb;
+
+    --dark-bg: #1f2424;
+    --dark-bg-2: #2e3030;
+    --dark-border: #5e6d6f;
+
+    --dark-link-h: 221;
+    --dark-link-s: 90%;
+    --dark-link-l: 70%;
+    --dark-link: hsl(var(--dark-link-h), var(--dark-link-s), var(--dark-link-l));
+
+    --dark-primary: hsl(var(--dark-link-h), var(--dark-link-s), calc(var(--dark-link-l) / .9));
+    --dark-primary-border: hsl(var(--dark-link-h), calc(var(--dark-link-s) * .8), calc(var(--dark-link-l) * .8));
+}
+
+html[data-theme="dark"] {
+    color-scheme: dark;
+}
+html[data-theme="dark"] body {
+    background-color: var(--dark-bg);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] h5,
+html[data-theme="dark"] h6,
+html[data-theme="dark"] pre,
+html[data-theme="dark"] .button,
+html[data-theme="dark"] .title,
+html[data-theme="dark"] .input,
+html[data-theme="dark"] .select select,
+html[data-theme="dark"] .textarea,
+html[data-theme="dark"] .checkbox,
+html[data-theme="dark"] .tabs,
+html[data-theme="dark"] .tabs a,
+html[data-theme="dark"] .panel,
+html[data-theme="dark"] .panel-block,
+html[data-theme="dark"] .pagination-ellipsis,
+html[data-theme="dark"] .pagination-list,
+html[data-theme="dark"] .pagination-previous,
+html[data-theme="dark"] .pagination-next,
+html[data-theme="dark"] body,
+html[data-theme="dark"] {
+    background-color: var(--dark-bg);
+    border-color: var(--dark-border);
+    color: var(--dark-text);
+}
+
+html[data-theme="dark"] .panel-block {
+    background-color: var(--dark-bg-2);
+}
+
+html[data-theme="dark"] .pagination-link.is-current {
+    background-color: var(--dark-primary);
+    border-color: var(--dark-primary-border);
+}
+
+html[data-theme="dark"] .pagination-link[disabled],
+html[data-theme="dark"] .pagination-next[disabled],
+html[data-theme="dark"] .pagination-previous[disabled] {
+    background-color: var(--dark-bg-2);
+    border-color: var(--dark-bg-2);
+    box-shadow: none;
+    color: var(--dark-text-2);
+    opacity: .5;
+}
+
+html[data-theme="dark"] a {
+    color: var(--dark-link);
+}
+
+html[data-theme="dark"] a:hover {
+    color: var(--dark-text-2);
+}
+
+html[data-theme="dark"] pre {
+    background-color: var(--dark-bg-2);
+}
+
+html[data-theme="dark"] ::placeholder {
+    color: var(--dark-text-2);
+}
+
+html[data-theme="dark"] .tabs ul {
+    border-bottom-color: var(--dark-border);
+}
+
+html[data-theme="dark"] .tabs li a {
+    color: var(--dark-text-2);
+}
+
+html[data-theme="dark"] .tabs li.is-active a {
+    color: var(--dark-text);
+    border-bottom-color: var(--dark-primary-border);
+}
+
+html[data-theme="dark"] .tabs li.is-active a .icon{
+    color: var(--dark-primary);
+}
+
+.tabs li.is-active a .icon{
+    color: var(--light-primary);
+}
+
+html[data-theme="dark"] .panel {
+    box-shadow: 0 0.5em 1em -0.125em rgb(255 255 255 / 10%), 0 0 0 1px rgb(255 255 255 / 5%);
+}
+
+html[data-theme="dark"] .control.has-icons-left .input:focus~.icon,
+html[data-theme="dark"] .control.has-icons-left .select:focus~.icon,
+html[data-theme="dark"] .control.has-icons-right .input:focus~.icon,
+html[data-theme="dark"] .control.has-icons-right .select:focus~.icon {
+    color: var(--dark-text);
+}
+
+.control.has-icons-left .input:focus~.icon,
+.control.has-icons-left .select:focus~.icon,
+.control.has-icons-right .input:focus~.icon,
+.control.has-icons-right .select:focus~.icon {
+    color: var(--light-text);
+}
+
+/* https://github.com/twitter/twemoji */
+img.emoji {
+    height: 1em;
+    width: 1em;
+    margin: 0 .05em 0 .1em;
+    vertical-align: -0.1em;
+ }
+
+ .icon .feed-twitter-icon {
+    vertical-align: text-bottom;
+    width: 1.5rem;
+    height: 1.5rem; /* match feed-header */
+}
+
+.button .material-icons-outlined {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.feed-media-thumb {
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.feed-media-thumb {
+    background-color: var(--light-bg);
+}
+
+html[data-theme="dark"]  .feed-media-thumb {
+    background-color: var(--dark-bg);
+}
+
+.feed-media-thumb img {
+    object-fit: cover;
+}
+
+.feed-media-thumb .icon {
+    display: flex;
+    text-align: center;
+    font-size: 3rem;
+}
+
+.feed-main {
+    word-break: break-word;
+}

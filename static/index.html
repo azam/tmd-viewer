@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title data-l10n-id="app-title">TMD Viewer</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="defaultLanguage" content="en">
+    <meta name="availableLanguages" content="en,ja">
+    <link rel="localization" href="./static/labels.{locale}.ftl">
+
+    <!-- This should be top on load -->
+    <script src="./static/darklight.js"></script>
+    <!-- Google Fonts -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Outlined"> -->
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Sans+Bamum"> -->
+    <!-- Twitter Emoji Font -->
+    <!-- <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script> -->
+    <!-- https://github.com/twitter/twemoji/tree/gh-pages -->
+    <!-- https://downgit.github.io/#/home?url=https:%2F%2Fgithub.com%2Ftwitter%2Ftwemoji%2Ftree%2Fgh-pages%2Fv%2F13.1.0 -->
+    <script src="./static/twemoji-13.1.0/twemoji.min.js"></script>
+
+    <!-- Convert URLs in text to links -->
+    <script src="./static/linkify.min.js"></script>
+    <script src="./static/linkify-element.min.js"></script>
+    <script src="./static/linkify-html.min.js"></script>
+    <script src="./static/linkify-plugin-hashtag.min.js"></script>
+    <script src="./static/linkify-plugin-mention.min.js"></script>
+    <!-- Localization -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@fluent/web@0.2.1/fluent-web.min.js"></script> -->
+    <script src="./static/fluent-web.min.js"></script>
+
+    <!-- CSS Reset -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"> -->
+    <link rel="stylesheet" href="./static/normalize.css">
+    <!-- CSS library -->
+    <link rel="stylesheet" href="./static/bulma.min.css">
+    <link rel="stylesheet" href="./static/empty.css" id="themeCssLink">
+    <!-- Local CSS -->
+    <link rel="stylesheet" href="./static/index.css">
+</head>
+
+<body>
+    <!--[if lt IE 7]><p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p><![endif]-->
+    <div class="container">
+        <div class="tabs">
+            <ul>
+                <li id="feedsTab"><a href="#feeds"><span class="icon material-icons-outlined">forum</span> <span
+                            data-l10n-id="feeds-tab">Feeds</span></a>
+                </li>
+                <li id="settingsTab"><a href="#settings"><span class="icon material-icons-outlined">settings</span>
+                        <span data-l10n-id="settings-tab">Settings</span></a></li>
+            </ul>
+        </div>
+
+        <div id="views">
+            <!-- Feeds View -->
+            <div class="is-hidden" id="feedsView">
+                <div id="feedsFilter" class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="feedsUserNameInput" class="input" type="text" placeholder="Username"
+                                    data-l10n-id="feeds-input-username">
+                                <span class="icon is-left"><span
+                                        class="material-icons-outlined">person_search</span></span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="feedsKeywordInput" class="input" type="text" placeholder="Keyword"
+                                    data-l10n-id="feeds-input-keyword">
+                                <span class="icon is-left"><span class="material-icons-outlined">search</span></span>
+                            </div>
+                        </div>
+                        <!--
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="feedsSinceInput" class="input" type="datetime-local" placeholder="開始">
+                                <span class="icon is-left"><span
+                                        class="material-icons-outlined">first_page</span></span>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="feedsUntilInput" class="input" type="datetime-local" placeholder="開始">
+                                <span class="icon is-left"><span class="material-icons-outlined">last_page</span></span>
+                            </div>
+                        </div>
+                        -->
+                        <div class="field">
+                            <div class="control">
+                                <label class="button input checkbox"><input id="feedsHasMediaOnlyInput" type="checkbox">
+                                    <span data-l10n-id="feeds-input-has-media-only">Media only</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+                    <a class="pagination-previous" id="prevFeedsButton" disabled
+                        data-l10n-id="feeds-input-previous-page"><span
+                            class="material-icons-outlined">navigate_before</span></a>
+                    <ul class="pagination-list">
+                        <li><input class="input pagination-link feeds-page-input" id="feedsPageInput" type="number"
+                                value="1" placeholder="Page" aria-label="Page" aria-current="page"
+                                data-l10n-id="feeds-input-page"></li>
+                    </ul>
+                    <a class="pagination-next" id="nextFeedsButton" disabled data-l10n-id="feeds-input-next-page"><span
+                            class="material-icons-outlined">navigate_next</span></a>
+                </nav>
+                <div id="feeds" class="panel is-primary"></div>
+            </div>
+
+            <!-- Settings View -->
+            <div class="is-hidden" id="settingsView">
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                        <div class="field has-addons">
+                            <div class="control has-icons-left">
+                                <input class="input" id="settingsSetDataDirValue" type="text"
+                                    placeholder="New data directory" data-l10n-id="settings-input-set-data-dir">
+                                <span class="icon is-left"><span class="material-icons-outlined">folder</span></span>
+                            </div>
+                            <div class="control">
+                                <button class="button" id="settingsSetDataDirButton"
+                                    data-l10n-id="settings-set-data-dir-button">Update</button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button" id="settingsScanButton">
+                                    <span class="icon material-icons-outlined">difference</span> <span
+                                        data-l10n-id="settings-scan-button">Scan</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button" id="settingsGenerateThumbnailsButton">
+                                    <span class="icon material-icons-outlined">preview</span> <span
+                                        data-l10n-id="settings-generate-thumbnails-button">Generate thumbnails</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button" id="settingsCleanButton">
+                                    <span class="icon material-icons-outlined">cleaning_services</span>
+                                    <span data-l10n-id="settings-clean-database-button">Clean database</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <div class="control">
+                                <button class="button" id="settingsStateButton">
+                                    <span class="icon material-icons-outlined">query_stats</span>
+                                    <span data-l10n-id="settings-server-state-button">Server state</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label class="button checkbox">
+                                <input type="checkbox" id="settingsDarkLightSwitch"> <span
+                                    data-l10n-id="settings-dark-mode">Dark mode</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <pre id="appStateOutput"></pre>
+            </div>
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <template id="feed-media-deleted-template">
+        <figure class="feed-media-thumb feed-media-deleted is-pulled-right">
+            <a class="feed-media-link" href="{media_url}" title="{media_url}" target="_blank" rel="noopener noreferrer">
+                <span class="image is-128x128 icon material-icons-outlined feed-media-thumbnail">block</span>
+            </a>
+        </figure>
+    </template>
+    <template id="feed-media-image-template">
+        <figure class="feed-media-thumb feed-media-image is-pulled-right">
+            <a class="feed-media-link" href="{media_url}" title="{media_url}" target="_blank" rel="noopener noreferrer">
+                <img class="image is-128x128 feed-media-thumbnail" src="{media_thumbnail}" alt="{media_url}"></img>
+            </a>
+        </figure>
+    </template>
+    <template id="feed-media-video-template">
+        <figure class="feed-media-thumb feed-media-video is-pulled-right">
+            <a class="feed-media-link" href="{media_url}" title="{media_url}" target="_blank" rel="noopener noreferrer">
+                <span class="image is-128x128 icon material-icons-outlined feed-media-thumbnail">play_circle_outline</span>
+            </a>
+        </figure>
+    </template>
+    <template id="feed-empty-template">
+        <div class="panel-block feed feed-is-empty">
+            <div class="container has-text-centered">
+                <span class="icon is-large"><span class="material-icons-outlined">report_problem</span></span>
+                <br/>
+                <span data-l10n-id="feeds-empty-text">Empty</span>
+            </div>
+        </div>
+    </template>
+    <template id="feed-template">
+        <div class="panel-block feed">
+            <div class="feed-main container">
+                <div class="feed-header-retweet is-flex">
+                    <div class="feed-header-retweet-details container is-italic">
+                        <span class="feed-retweet-text is-pulled-left">
+                            <a href="{username_url}" title="Open on Twitter" target="_blank" rel="noopener noreferrer" data-l10n-id="feeds-twitter-link">{username}</a>
+                        </span>
+                        <span class="feed-retweet-header-righthand is-pulled-right">
+                            <span class="feed-retweet-datetime">{retweet_at}</span>
+                            <span class="icon icon-text is-small material-icons-outlined">autorenew</span>
+                        </span>
+                    </div>
+                </div>
+                <div class="feed-header is-flex">
+                    <div class="feed-header-details container is-size-5">
+                        <span class="feed-username is-pulled-left has-text-weight-semibold">
+                            <a href="{username_url}" title="Open on Twitter" target="_blank" rel="noopener noreferrer" data-l10n-id="feeds-twitter-link">{username}</a>
+                        </span>
+                        <span class="feed-header-righthand is-pulled-right">
+                            <span class="feed-datetime ">{feed_at}</span>
+                            <span class="feed-twitter-url icon">
+                                <a href="{feed_url}" title="Open on Twitter" target="_blank" rel="noopener noreferrer" data-l10n-id="feeds-twitter-link">
+                                    <img class="feed-twitter-icon icon icon-text" src="./static/twitter.blue.svg" alt="Twitter">
+                                </a>
+                            </span>
+                        </span>
+                    </div>
+                </div>
+                <div class="columns">
+                    <div class="feed-content column">{content}</div>
+                    <div class="feed-media column is-one-quarter is-pulled-right"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- Local JS -->
+    <script src="./static/index.mjs" type="module"></script>
+</body>
+
+</html>

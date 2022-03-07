@@ -1,0 +1,4 @@
+data_dir: "C:/data/twitter"
+bind_address: 127.0.0.1:8888
+scanner_count_limit: 2
+time_offset: 9
