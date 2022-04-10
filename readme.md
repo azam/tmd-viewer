@@ -60,6 +60,23 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 5. Start by scanning the directory by clicking _Scan_.
 6. When scan is completed you can go to the _Feeds_ tab to view the data available.
 
+## Windows service
+
+### Add as windows service
+
+1. Make sure `tmd-viewer-service.exe`, `/static` and `tmd-viewer.yaml` is in the same directory.
+2. Run the following command on as Administrator:
+```
+sc.exe create tmd-viewer-service binPath="{PATH_TO_TMD_VIEWER}\tmd-viewer-service.exe"
+```
+
+### Remove windows service
+
+1. Run the following command on as Administrator:
+```
+sc.exe delete tmd-viewer-service
+```
+
 ## Reference
 
 * [Twitter Media Downloader](https://chrome.google.com/webstore/detail/twitter-media-downloader/cblpjenafgeohmnjknfhpdbdljfkndig?hl=en)
