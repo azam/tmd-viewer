@@ -385,7 +385,7 @@ function renderFeed(feed) {
     let feedContent = feedElem.querySelector('.feed-content');
     feedContent.innerHTML = f.contents.replaceAll('\n', '<br/>');
     linkifyElement(feedContent, LINKIFY_OPTS);
-    twemoji.parse(feedContent, { base: './static/twemoji-14.0.2/assets' });
+    twemoji.parse(feedContent, { base: './static/twemoji-14.0.2/assets/' });
 
     // Media
     if (hasMedia) {
