@@ -1,13 +1,14 @@
 use actix_files::{file_extension_to_mime, Files, NamedFile};
 use actix_web::{
-    dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, App, HttpResponse,
-    HttpServer, Responder, Result as HttpResult,
+    body::Body, dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, web::Bytes,
+    App, HttpResponse, HttpServer, Responder, Result as HttpResult,
 };
+use actix_web_static_files::{Resource, ResourceFiles};
 use base64;
 use chrono::{offset::FixedOffset, NaiveDateTime, TimeZone};
 use csv::{Error as CsvError, ReaderBuilder as CsvReaderBuilder};
 use image::{io::Reader as ImageReader, ImageOutputFormat};
-use mime::{Mime, IMAGE_JPEG};
+use mime::{Mime, IMAGE_JPEG, TEXT_HTML};
 use r2d2::{Pool, PooledConnection};
 use r2d2_sqlite::SqliteConnectionManager;
 use regex::Regex;
@@ -20,6 +21,7 @@ use serde_yaml;
 use zip::ZipArchive;
 
 use std::borrow::Cow;
+use std::collections::HashMap;
 use std::ffi::OsStr;
 use std::fs;
 use std::fs::File;
@@ -513,9 +515,10 @@ async fn app_state_service(data: web::Data<AppState>) -> impl Responder {
 }
 
 #[get("/")]
-async fn home_service() -> HttpResult<NamedFile> {
-    let path: PathBuf = "./static/index.html".parse().unwrap();
-    Ok(NamedFile::open(path).unwrap())
+async fn home_service() -> impl Responder {
+    return HttpResponse::Ok()
+        .header(CONTENT_TYPE, TEXT_HTML)
+        .body(Bytes::from_static(include_bytes!("../static/index.html")));
 }
 
 #[get("/a/media/file/{feed_id}/{media_id}")]
@@ -1543,6 +1546,8 @@ fn get_conn(data: web::Data<AppState>) -> PooledConnection<SqliteConnectionManag
     conn
 }
 
+include!(concat!(env!("OUT_DIR"), "/generated.rs"));
+
 // https://docs.rs/actix-web/4.0.1/actix_web/rt/index.html
 #[actix_web::main]
 pub async fn serve(cwd: Box<String>, server_tx: Arc<Mutex<Sender<Server>>>) -> std::io::Result<()> {
@@ -1609,14 +1614,12 @@ pub async fn serve(cwd: Box<String>, server_tx: Arc<Mutex<Sender<Server>>>) -> s
     println!("starting http://{}", bind_address);
 
     let server = HttpServer::new(move || {
+        let static_files: HashMap<&'static str, Resource> = generate();
+
         App::new()
             .app_data(web::Data::clone(&app_state))
             .wrap(middleware::Compress::default())
-            .service(
-                Files::new("/static", "./static")
-                    .use_etag(true)
-                    .use_last_modified(true),
-            )
+            .service(ResourceFiles::new("/static", static_files))
             .service(feeds_service)
             .service(media_file_service)
             .service(media_preview_service)
