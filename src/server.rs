@@ -1,10 +1,10 @@
-use actix_files::{file_extension_to_mime, Files, NamedFile};
+use actix_files::file_extension_to_mime;
 use actix_web::{
-    body::Body, dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, web::Bytes,
-    App, HttpResponse, HttpServer, Responder, Result as HttpResult,
+    dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, web::Bytes,
+    App, HttpResponse, HttpServer, Responder,
 };
 use actix_web_static_files::{Resource, ResourceFiles};
-use base64;
+use base64::engine::Engine;
 use chrono::{offset::FixedOffset, NaiveDateTime, TimeZone};
 use csv::{Error as CsvError, ReaderBuilder as CsvReaderBuilder};
 use image::{io::Reader as ImageReader, ImageOutputFormat};
@@ -16,7 +16,7 @@ use rusqlite::{
     named_params, params, types::Value as SqlValue, Result as SqlResult, Statement, ToSql,
     Transaction,
 };
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserialize, Serialize, Serializer};
 use serde_yaml;
 use zip::ZipArchive;
 
@@ -171,7 +171,10 @@ fn serialize_blob<S: Serializer>(
     value: &Option<Vec<u8>>,
     serializer: S,
 ) -> Result<S::Ok, S::Error> {
-    serializer.serialize_str(&base64::encode(&value.as_ref().unwrap_or(&Vec::new())))
+    serializer.serialize_str(
+        &base64::engine::general_purpose::URL_SAFE_NO_PAD
+            .encode(&value.as_ref().unwrap_or(&Vec::new())),
+    )
 }
 
 fn format_string<S: Serializer, V: core::fmt::Display>(

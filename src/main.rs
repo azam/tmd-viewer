@@ -1,7 +1,7 @@
 mod server;
-use std::sync::{Arc, RwLock, Mutex, mpsc::channel};
-use std::thread;
 use actix_web::dev::Server;
+use std::sync::{mpsc::channel, Arc, Mutex, RwLock};
+use std::thread;
 
 fn main() {
     // Static (/static) and config file is read from current directory on command line
@@ -19,7 +19,7 @@ fn main() {
             Ok(instance) => {
                 // Persist server instance
                 *server_mutex.write().unwrap() = Some(instance);
-            },
+            }
             Err(err) => println!("{:?}", err),
         };
         ()

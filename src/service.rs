@@ -61,7 +61,7 @@ fn service_main(_arguments: Vec<OsString>) {
                     };
                     match service_handle_ref_eh.read().unwrap().as_ref() {
                         Some(handle) => handle.set_service_status(stop_pending_status).unwrap(),
-                        None => {},
+                        None => {}
                     };
 
                     // Stop service synchronously
@@ -79,7 +79,7 @@ fn service_main(_arguments: Vec<OsString>) {
                     };
                     match service_handle_ref_eh.read().unwrap().as_ref() {
                         Some(handle) => handle.set_service_status(stopped_status).unwrap(),
-                        None => {},
+                        None => {}
                     };
                     ServiceControlHandlerResult::NoError
                 }
@@ -119,7 +119,7 @@ fn service_main(_arguments: Vec<OsString>) {
                 };
                 match service_handle_ref_start_rx.read().unwrap().as_ref() {
                     Some(handle) => handle.set_service_status(running_status).unwrap(),
-                    None => {},
+                    None => {}
                 };
             }
             Err(err) => println!("{:?}", err),

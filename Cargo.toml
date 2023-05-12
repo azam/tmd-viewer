@@ -14,29 +14,28 @@ name = "tmd-viewer-service"
 path = "src/service.rs"
 
 [dependencies]
-actix-web = "3"
+actix-web = "3.3.3"
 actix-files = "0.5"
 actix-web-static-files = "3.0.5"
-base64 = "0.13.0"
-bytes = "1"
-chrono = "0.4.19"
-clap = { version = "3.1.6", features = ["derive"] }
-csv = "1.1"
-futures = "0.3"
-image = "0.24.1"
-mime = "0.3.16"
-r2d2 = "0.8.9"
-r2d2_sqlite = "0.19.0"
-regex = "1.5.4"
-rusqlite = { version = "0.26.3", features = ["bundled", "time"] }
-serde = { version = "1.0", features = ["derive"] }
-serde_yaml = "0.8"
+base64 = "0.21.0"
+bytes = "1.4.0"
+chrono = "0.4.24"
+csv = "1.2.1"
+futures = "0.3.28"
+image = "0.24.6"
+mime = "0.3.17"
+r2d2 = "0.8.10"
+r2d2_sqlite = "0.21.0"
+regex = "1.8.1"
+rusqlite = { version = "0.28.0", features = ["bundled", "time"] }
+serde = { version = "1.0.163", features = ["derive"] }
+serde_yaml = "0.9.21"
 static-files = "0.2.3"
-time = "0.3.7"
-zip = "0.5.13"
+time = "0.3.21"
+zip = "0.6.5"
 
 [build-dependencies]
 actix-web-static-files = "3.0.5"
 
 [target.'cfg( target_os = "windows" )'.dependencies]
-windows-service = "0.4.0"
+windows-service = "0.6.0"
