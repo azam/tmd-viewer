@@ -1,7 +1,18 @@
+use std::borrow::Cow;
+use std::collections::HashMap;
+use std::ffi::OsStr;
+use std::fs;
+use std::fs::File;
+use std::io::{Cursor, Read};
+use std::path::PathBuf;
+use std::sync::{mpsc::Sender, Arc, Mutex, RwLock};
+use std::thread;
+use std::time::SystemTime;
+
 use actix_files::file_extension_to_mime;
 use actix_web::{
-    dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, web::Bytes,
-    App, HttpResponse, HttpServer, Responder,
+    dev::Server, get, http::header::CONTENT_TYPE, middleware, post, web, web::Bytes, App,
+    HttpResponse, HttpServer, Responder,
 };
 use actix_web_static_files::{Resource, ResourceFiles};
 use base64::engine::Engine;
@@ -19,17 +30,6 @@ use rusqlite::{
 use serde::{Deserialize, Serialize, Serializer};
 use serde_yaml;
 use zip::ZipArchive;
-
-use std::borrow::Cow;
-use std::collections::HashMap;
-use std::ffi::OsStr;
-use std::fs;
-use std::fs::File;
-use std::io::{Cursor, Read};
-use std::path::PathBuf;
-use std::sync::{mpsc::Sender, Arc, Mutex, RwLock};
-use std::thread;
-use std::time::SystemTime;
 
 const CONFIG_FILENAME: &str = "tmd-viewer.yaml";
 const DATABASE_FILENAME: &str = "tmd-viewer.db";

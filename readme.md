@@ -67,7 +67,7 @@ OR OTHER DEALINGS IN THE SOFTWARE.
 1. Make sure `tmd-viewer-service.exe`, `/static` and `tmd-viewer.yaml` is in the same directory.
 2. Run the following command on as Administrator:
 ```
-sc.exe create tmd-viewer-service binPath="{PATH_TO_TMD_VIEWER}\tmd-viewer-service.exe"
+sc.exe create tmd-viewer-service binPath= "{PATH_TO_TMD_VIEWER}\tmd-viewer.exe" "service"
 ```
 
 ### Remove windows service

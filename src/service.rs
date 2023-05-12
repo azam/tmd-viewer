@@ -1,32 +1,26 @@
-mod server;
-use actix_web::dev::Server;
-use futures::executor;
 use std::sync::{mpsc::channel, Arc, Mutex, RwLock};
 use std::thread;
 use std::time::Duration;
 
-#[cfg(target_os = "windows")]
+use actix_web::dev::Server;
+use futures::executor;
+
+use crate::server;
+
 extern crate windows_service;
 
-#[cfg(target_os = "windows")]
 use std::ffi::OsString;
 
-#[cfg(target_os = "windows")]
 use windows_service::service::{
     ServiceControl, ServiceControlAccept, ServiceExitCode, ServiceState, ServiceStatus, ServiceType,
 };
-#[cfg(target_os = "windows")]
 use windows_service::service_control_handler::{ServiceControlHandlerResult, ServiceStatusHandle};
-#[cfg(target_os = "windows")]
 use windows_service::{define_windows_service, service_control_handler, service_dispatcher};
 
-#[cfg(target_os = "windows")]
 define_windows_service!(ffi_service_main, service_main);
 
-#[cfg(target_os = "windows")]
 const SERVICE_NAME: &str = "tmd-viewer-service";
 
-#[cfg(target_os = "windows")]
 fn service_main(_arguments: Vec<OsString>) {
     // Hold server instance, and windows service handle in a thread-safe RwLock
     let server_rwlock = RwLock::new(Option::<Server>::None);
@@ -135,10 +129,8 @@ fn service_main(_arguments: Vec<OsString>) {
     .unwrap();
 }
 
-#[cfg(target_os = "windows")]
-fn main() -> Result<(), windows_service::Error> {
+pub(crate) fn main() {
     // Register generated `ffi_service_main` with the system and start the service, blocking
     // this thread until the service is stopped.
     service_dispatcher::start(SERVICE_NAME, ffi_service_main).unwrap();
-    Ok(())
 }
